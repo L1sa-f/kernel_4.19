@@ -2845,50 +2845,6 @@ bail:
 	return err;
 }
 
-static int fastrpc_send_cpuinfo_to_dsp(struct fastrpc_file *fl)
-{
-	int err = 0;
-	uint64_t cpuinfo = 0;
-	struct fastrpc_apps *me = &gfa;
-	struct fastrpc_ioctl_invoke_crc ioctl;
-	remote_arg_t ra[2];
-	int cid = -1;
-
-	if (!fl) {
-		err = -EBADF;
-		goto bail;
-	}
-	cid = fl->cid;
-
-	VERIFY(err, cid >= ADSP_DOMAIN_ID && cid < NUM_CHANNELS);
-	if (err) {
-		err = -ECHRNG;
-		pr_err("invalid channel 0x%zx set for session\n\n",
-			cid);
-		goto bail;
-	}
-	cpuinfo = me->channel[cid].cpuinfo_todsp;
-	/* return success if already updated to remote processor */
-	if (me->channel[cid].cpuinfo_status)
-		return 0;
-
-	ra[0].buf.pv = (void *)&cpuinfo;
-	ra[0].buf.len = sizeof(cpuinfo);
-	ioctl.inv.handle = FASTRPC_STATIC_HANDLE_DSP_UTILITIES;
-	ioctl.inv.sc = REMOTE_SCALARS_MAKE(1, 1, 0);
-	ioctl.inv.pra = ra;
-	ioctl.fds = NULL;
-	ioctl.attrs = NULL;
-	ioctl.crc = NULL;
-	fl->pd = 1;
-
-	err = fastrpc_internal_invoke(fl, FASTRPC_MODE_PARALLEL, 1, &ioctl);
-	if (!err)
-		me->channel[cid].cpuinfo_status = true;
-bail:
-	return err;
-}
-
 static int fastrpc_get_info_from_dsp(struct fastrpc_file *fl,
 				uint32_t *dsp_attr_buf,
 				uint32_t dsp_attr_buf_len,
@@ -4322,7 +4278,6 @@ static int fastrpc_internal_control(struct fastrpc_file *fl,
 {
 	int err = 0;
 	struct fastrpc_apps *me = &gfa;
-	u32 len = me->silvercores.corecount, i = 0;
 
 	VERIFY(err, !IS_ERR_OR_NULL(fl) && !IS_ERR_OR_NULL(fl->apps));
 	if (err)
