@@ -64,7 +64,7 @@
 				  SNDRV_PCM_FMTBIT_S24_3LE | \
 				  SNDRV_PCM_FMTBIT_S32_LE)
 
-#define TASHA_FORMATS (SNDRV_PCM_FMTBIT_S16_LE)
+#define TASHA_FORMATS (SNDRV_PCM_FMTBIT_S24_LE)
 
 /*
  * Timeout in milli seconds and it is the wait time for
@@ -93,7 +93,7 @@
 	(TASHA_CPE_SS_ERR_STATUS_WDOG_BITE | \
 	 TASHA_CPE_SS_ERR_STATUS_MEM_ACCESS)
 
-#define SLIM_BW_CLK_GEAR_9 6200000
+#define SLIM_BW_CLK_GEAR_10 24600000
 #define SLIM_BW_UNVOTE 0
 
 #define CPE_FLL_CLK_75MHZ 75000000
@@ -13615,7 +13615,7 @@ static int tasha_codec_vote_max_bw(struct snd_soc_component *component,
 	if (vote) {
 		tasha->ref_count++;
 		if (tasha->ref_count == 1) {
-			bw_ops = SLIM_BW_CLK_GEAR_9;
+			bw_ops = SLIM_BW_CLK_GEAR_10;
 			tasha_codec_slim_reserve_bw(component,
 				bw_ops, true);
 		}
