@@ -843,19 +843,19 @@ static int tasha_codec_vote_max_bw(struct snd_soc_component *component,
 static const struct tasha_reg_mask_val tasha_spkr_default[] = {
 	{WCD9335_CDC_COMPANDER7_CTL3, 0x80, 0x80},
 	{WCD9335_CDC_COMPANDER8_CTL3, 0x80, 0x80},
-	{WCD9335_CDC_COMPANDER7_CTL7, 0x01, 0x01},
-	{WCD9335_CDC_COMPANDER8_CTL7, 0x01, 0x01},
-	{WCD9335_CDC_BOOST0_BOOST_CTL, 0x7C, 0x58},
-	{WCD9335_CDC_BOOST1_BOOST_CTL, 0x7C, 0x58},
+	{WCD9335_CDC_COMPANDER7_CTL7, 0x23, 0x23},
+	{WCD9335_CDC_COMPANDER8_CTL7, 0x23, 0x23},
+	{WCD9335_CDC_BOOST0_BOOST_CTL, 0x78, 0x78},
+	{WCD9335_CDC_BOOST1_BOOST_CTL, 0x78, 0x78},
 };
 
 static const struct tasha_reg_mask_val tasha_spkr_mode1[] = {
 	{WCD9335_CDC_COMPANDER7_CTL3, 0x80, 0x00},
 	{WCD9335_CDC_COMPANDER8_CTL3, 0x80, 0x00},
-	{WCD9335_CDC_COMPANDER7_CTL7, 0x01, 0x00},
-	{WCD9335_CDC_COMPANDER8_CTL7, 0x01, 0x00},
-	{WCD9335_CDC_BOOST0_BOOST_CTL, 0x7C, 0x44},
-	{WCD9335_CDC_BOOST1_BOOST_CTL, 0x7C, 0x44},
+	{WCD9335_CDC_COMPANDER7_CTL7, 0x23, 0x23},
+	{WCD9335_CDC_COMPANDER8_CTL7, 0x23, 0x23},
+	{WCD9335_CDC_BOOST0_BOOST_CTL, 0x78, 0x78},
+	{WCD9335_CDC_BOOST1_BOOST_CTL, 0x78, 0x78},
 };
 
 /**
@@ -5186,13 +5186,13 @@ static int tasha_codec_config_ear_spkr_gain(struct snd_soc_component *component,
 	struct tasha_priv *tasha = snd_soc_component_get_drvdata(component);
 
 	switch (tasha->spkr_mode) {
-	/* Compander gain in SPKR_MODE1 case is 12 dB */
+	/* Compander gain in SPKR_MODE1 case is 10 dB */
 	case SPKR_MODE_1:
-		comp_gain_offset = -12;
+		comp_gain_offset = -10;
 		break;
-	/* Default case compander gain is 15 dB */
+	/* Default case compander gain is 12 dB */
 	default:
-		comp_gain_offset = -15;
+		comp_gain_offset = -12;
 		break;
 	}
 
@@ -9402,12 +9402,12 @@ static const struct snd_kcontrol_new tasha_analog_gain_controls[] = {
 	SOC_SINGLE_TLV("HPHR Volume", WCD9335_HPH_R_EN, 0, 20, 1,
 		line_gain),
 	SOC_SINGLE_TLV("LINEOUT1 Volume", WCD9335_DIFF_LO_LO1_COMPANDER,
-			3, 16, 1, line_gain),
+			3, 12, 1, line_gain),
 	SOC_SINGLE_TLV("LINEOUT2 Volume", WCD9335_DIFF_LO_LO2_COMPANDER,
-			3, 16, 1, line_gain),
-	SOC_SINGLE_TLV("LINEOUT3 Volume", WCD9335_SE_LO_LO3_GAIN, 0, 20, 1,
+			3, 12, 1, line_gain),
+	SOC_SINGLE_TLV("LINEOUT3 Volume", WCD9335_SE_LO_LO3_GAIN, 0, 16, 1,
 			line_gain),
-	SOC_SINGLE_TLV("LINEOUT4 Volume", WCD9335_SE_LO_LO4_GAIN, 0, 20, 1,
+	SOC_SINGLE_TLV("LINEOUT4 Volume", WCD9335_SE_LO_LO4_GAIN, 0, 16, 1,
 			line_gain),
 
 	SOC_SINGLE_TLV("ADC1 Volume", WCD9335_ANA_AMIC1, 0, 20, 0,
@@ -12756,12 +12756,12 @@ static const struct tasha_reg_mask_val tasha_codec_reg_init_val_2_0[] = {
 	{WCD9335_RCO_CTRL_2, 0x0F, 0x08},
 	{WCD9335_RX_BIAS_FLYB_MID_RST, 0xF0, 0x10},
 	{WCD9335_FLYBACK_CTRL_1, 0x20, 0x20},
-	{WCD9335_HPH_OCP_CTL, 0xFF, 0x7A},
+	{WCD9335_HPH_OCP_CTL, 0xFF, 0xC8},
 	{WCD9335_HPH_L_TEST, 0x01, 0x01},
 	{WCD9335_HPH_R_TEST, 0x01, 0x01},
 	{WCD9335_CDC_BOOST0_BOOST_CFG1, 0x3F, 0x12},
 	{WCD9335_CDC_BOOST0_BOOST_CFG2, 0x1C, 0x08},
-	{WCD9335_CDC_COMPANDER7_CTL7, 0x1E, 0x18},
+	{WCD9335_CDC_COMPANDER7_CTL7, 0x1E, 0x23},
 	{WCD9335_CDC_BOOST1_BOOST_CFG1, 0x3F, 0x12},
 	{WCD9335_CDC_BOOST1_BOOST_CFG2, 0x1C, 0x08},
 	{WCD9335_CDC_COMPANDER8_CTL7, 0x1E, 0x18},
@@ -12803,8 +12803,8 @@ static const struct tasha_reg_mask_val tasha_codec_reg_init_common_val[] = {
 	{WCD9335_CDC_CLSH_K2_MSB, 0x0F, 0x00},
 	{WCD9335_CDC_CLSH_K2_LSB, 0xFF, 0x60},
 	{WCD9335_CPE_SS_DMIC_CFG, 0x80, 0x00},
-	{WCD9335_CDC_BOOST0_BOOST_CTL, 0x7C, 0x58},
-	{WCD9335_CDC_BOOST1_BOOST_CTL, 0x7C, 0x58},
+	{WCD9335_CDC_BOOST0_BOOST_CTL, 0x78, 0x78},
+	{WCD9335_CDC_BOOST1_BOOST_CTL, 0x78, 0x78},
 	{WCD9335_CDC_RX7_RX_PATH_CFG1, 0x08, 0x08},
 	{WCD9335_CDC_RX8_RX_PATH_CFG1, 0x08, 0x08},
 	{WCD9335_ANA_LO_1_2, 0x3C, 0X3C},
@@ -12819,8 +12819,8 @@ static const struct tasha_reg_mask_val tasha_codec_reg_init_common_val[] = {
 	{WCD9335_CDC_TX12_SPKR_PROT_PATH_CFG0, 0x01, 0x01},
 	{WCD9335_CDC_COMPANDER7_CTL3, 0x80, 0x80},
 	{WCD9335_CDC_COMPANDER8_CTL3, 0x80, 0x80},
-	{WCD9335_CDC_COMPANDER7_CTL7, 0x01, 0x01},
-	{WCD9335_CDC_COMPANDER8_CTL7, 0x01, 0x01},
+	{WCD9335_CDC_COMPANDER7_CTL7, 0x23, 0x23},
+	{WCD9335_CDC_COMPANDER8_CTL7, 0x23, 0x23},
 	{WCD9335_CDC_RX0_RX_PATH_CFG0, 0x01, 0x01},
 	{WCD9335_CDC_RX1_RX_PATH_CFG0, 0x01, 0x01},
 	{WCD9335_CDC_RX2_RX_PATH_CFG0, 0x01, 0x01},
@@ -12886,7 +12886,7 @@ static const struct tasha_reg_mask_val tasha_codec_reg_init_1_x_val[] = {
 	{WCD9335_CDC_RX5_RX_PATH_SEC0, 0xF8, 0xF8},
 	{WCD9335_CDC_RX6_RX_PATH_SEC0, 0xF8, 0xF8},
 	{WCD9335_RX_OCP_COUNT, 0xFF, 0xFF},
-	{WCD9335_HPH_OCP_CTL, 0xF0, 0x70},
+	{WCD9335_HPH_OCP_CTL, 0xF5, 0xC8},
 	{WCD9335_CPE_SS_CPAR_CFG, 0xFF, 0x00},
 	{WCD9335_FLYBACK_VNEG_CTRL_1, 0xFF, 0x63},
 	{WCD9335_FLYBACK_VNEG_CTRL_4, 0xFF, 0x7F},

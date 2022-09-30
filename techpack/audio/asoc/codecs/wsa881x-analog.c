@@ -641,7 +641,7 @@ static int wsa881x_rdac_ctrl(struct snd_soc_component *component, bool enable)
 			snd_soc_component_update_bits(component,
 					WSA881X_SPKR_BIAS_CAL, 0x01, 0x01);
 			snd_soc_component_update_bits(component,
-					WSA881X_SPKR_OCP_CTL, 0x30, 0x30);
+					WSA881X_SPKR_OCP_CTL, 0x64, 0x64);
 			snd_soc_component_update_bits(component,
 					WSA881X_SPKR_OCP_CTL, 0x0C, 0x00);
 		}

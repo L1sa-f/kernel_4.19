@@ -33,14 +33,14 @@
 #define WSA881X_NUM_RETRY	5
 
 enum {
-	G_18DB = 0,
+	G_18DB,
 	G_16P5DB,
 	G_15DB,
 	G_13P5DB,
 	G_12DB,
 	G_10P5DB,
 	G_9DB,
-	G_7P5DB,
+	G_7P5DB = 0,
 	G_6DB,
 	G_4P5DB,
 	G_3DB,
@@ -1240,15 +1240,15 @@ static void wsa881x_init(struct snd_soc_component *component)
 	if (snd_soc_component_read32(component, WSA881X_OTP_REG_0))
 		snd_soc_component_update_bits(component,
 				WSA881X_BOOST_PRESET_OUT1,
-				0xF0, 0x70);
+				0xF0, 0x23);
 	snd_soc_component_update_bits(component, WSA881X_BOOST_PRESET_OUT2,
-			0xF0, 0x30);
+			0xF0, 0x23);
 	snd_soc_component_update_bits(component, WSA881X_SPKR_DRV_EN,
 			0x08, 0x08);
 	snd_soc_component_update_bits(component, WSA881X_BOOST_CURRENT_LIMIT,
 			0x0F, 0x08);
 	snd_soc_component_update_bits(component, WSA881X_SPKR_OCP_CTL,
-			0x30, 0x30);
+			0x64, 0x64);
 	snd_soc_component_update_bits(component, WSA881X_SPKR_OCP_CTL,
 			0x0C, 0x00);
 	snd_soc_component_update_bits(component, WSA881X_OTP_REG_28,
