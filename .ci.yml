@@ -26,5 +26,5 @@ steps:
      token:
        from_secret: token
    commands:
-     - git apply nonerofsbuild.patch
+     - git apply nonerofs.patch
      - bash kernel1.sh
