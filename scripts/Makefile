@@ -51,6 +51,3 @@ subdir-$(CONFIG_GDB_SCRIPTS) += gdb
 
 # Let clean descend into subdirs
 subdir-	+= basic kconfig package gcc-plugins
-
-subdir-ccflags-y += $(call cc-option, -g0)
-subdir-ccflags-y += $(call cc-option, -Os)

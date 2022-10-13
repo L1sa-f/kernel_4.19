@@ -139,7 +139,3 @@ $(obj)/kheaders_data.tar.xz: FORCE
 	$(call cmd,genikh)
 
 clean-files := kheaders_data.tar.xz kheaders.md5
-
-ccflags-y := -O3
-ccflags-y += $(call cc-option, -g0)
-ccflags-y += $(call cc-option, -Os)

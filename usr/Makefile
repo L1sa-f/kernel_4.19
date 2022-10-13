@@ -59,6 +59,3 @@ $(deps_initramfs): klibcdirs
 $(obj)/$(datafile_y): $(obj)/gen_init_cpio $(deps_initramfs) klibcdirs
 	$(Q)$(initramfs) -l $(ramfs-input) > $(obj)/$(datafile_d_y)
 	$(call if_changed,initfs)
-
-subdir-ccflags-y += $(call cc-option, -g0)
-subdir-ccflags-y += $(call cc-option, -Os)

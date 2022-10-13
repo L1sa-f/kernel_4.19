@@ -34,6 +34,3 @@ include/generated/compile.h: FORCE
 	$(Q)$(CONFIG_SHELL) $(srctree)/scripts/mkcompile_h $@	\
 	"$(UTS_MACHINE)" "$(CONFIG_SMP)" "$(CONFIG_PREEMPT)"	\
 	"$(CC) $(KBUILD_CFLAGS)" "$(LD)"
-	
-subdir-ccflags-y += $(call cc-option, -g0)
-subdir-ccflags-y += $(call cc-option, -Os)

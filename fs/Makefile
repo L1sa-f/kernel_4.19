@@ -138,7 +138,3 @@ obj-$(CONFIG_CEPH_FS)		+= ceph/
 obj-$(CONFIG_PSTORE)		+= pstore/
 obj-$(CONFIG_EFIVAR_FS)		+= efivarfs/
 obj-$(CONFIG_EROFS_FS)		+= erofs/
-
-subdir-ccflags-y += -Os
-subdir-ccflags-y += $(call cc-option, -g0)
-subdir-ccflags-y += $(call cc-option, -Os)
