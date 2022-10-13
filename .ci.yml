@@ -1,18 +1,30 @@
+--- 
+clone: 
+  depth: 1
+kind: pipeline
+name : Lain erofs
+version: Lain-erofs
+steps:
+ - name: Lain
+   image: fadlyas/kernel_dockerfile
+   environment:
+     token:
+       from_secret: token
+   commands:
+     - bash kernel.sh
+
 ---
 clone:
   depth: 1
 kind: pipeline
-name: AzurePipeline
+name : Lain non-erofs
+version: Lain-nonerofs
 steps:
-  -
-    commands:
-      - "export token=$TOKEN"
-      - "curl https://raw.githubusercontent.com/L1sa-f/myscripts/master/kernel.sh | bash"
-    environment:
-      TOKEN:
-        from_secret: token
-    image: fadlyas/kernel_dockerfile
-    name: Azure-Images
-    trigger:
-      branch:
-        - main
+ - name: Lain-nonerofs
+   image: fadlyas/kernel_dockerfile
+   environment:
+     token:
+       from_secret: token
+   commands:
+     - git apply nonerofsbuild.patch
+     - bash kernel1.sh
