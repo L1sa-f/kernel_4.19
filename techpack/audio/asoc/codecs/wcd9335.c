@@ -7970,7 +7970,7 @@ static int tasha_rx_hph_mode_put(struct snd_kcontrol *kcontrol,
 	if (mode_val == 0) {
 		dev_warn(component->dev, "%s:Invalid HPH Mode, default to Cls-H HiFi\n",
 			__func__);
-		mode_val = CLS_H_HIFI;
+		mode_val = CLS_H_LOHIFI;
 	}
 	tasha->hph_mode = mode_val;
 	return 0;
@@ -13952,7 +13952,7 @@ static int tasha_codec_probe(struct snd_soc_component *component)
 	/* Class-H Init*/
 	wcd_clsh_init(&tasha->clsh_d);
 	/* Default HPH Mode to Class-H HiFi */
-	tasha->hph_mode = CLS_H_HIFI;
+	tasha->hph_mode = CLS_H_LOHIFI;
 
 	tasha->component = component;
 	for (i = 0; i < COMPANDER_MAX; i++)
