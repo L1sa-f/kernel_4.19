@@ -659,7 +659,7 @@ static void wcd_clsh_set_hph_mode(struct snd_soc_component *component,
 		if ((IS_CODEC_TYPE(wcd9xxx, WCD9335)) ||
 		    (IS_CODEC_TYPE(wcd9xxx, WCD9326))) {
 			val = 0x08;
-			gain = DAC_GAIN_M1P6DB;
+			gain = DAC_GAIN_M1P8DB;
 			ipeak = DELTA_I_200MA;
 		}
 		break;
